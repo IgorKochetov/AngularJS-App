@@ -5,9 +5,10 @@
 		.module("productManagement")
 		.controller("ProductEditController",
 		["product",
+			"$state",
 			ProductEditController]);
 
-	function ProductEditController(product) {
+	function ProductEditController(product, $state) {
 		var vm = this;
 
 		vm.product = product;
@@ -25,6 +26,14 @@
 
 			vm.opened = !vm.opened;
 		};
+
+		vm.submit = function() {
+			vm.product.$save();
+		};
+
+		vm.cancel = function() {
+			$state.go("productList");
+		}
 
 	}
 }());

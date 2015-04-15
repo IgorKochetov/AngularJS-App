@@ -90,6 +90,25 @@
 			return [200, product, {}]
 		});
 
+		$httpBackend.whenPOST(productUrl).respond(function (method, url, data) {
+			var product = angular.fromJson(data);
+
+			if (!product.productId) {
+				// new product Id
+				product.productId = products[products.length - 1].productId + 1;
+				products.push(product);
+			}
+			else {
+				// Updated product
+				for (var i = 0; i < products.length; i++) {
+					if (products[i].productId == product.productId) {
+						products[i] = product;
+						break;
+					}
+				};
+			}
+			return [200, product, {}];
+		});
 
 		$httpBackend.whenGET(/app/).passThrough();
 	})
